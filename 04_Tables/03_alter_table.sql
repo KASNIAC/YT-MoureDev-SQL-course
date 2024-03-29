@@ -12,6 +12,8 @@ Lección 13.10: https://youtu.be/OuJerKzV5T0?t=12578
 ALTER TABLE persons8
 ADD surname varchar(150);
 
+
+
 /*
 RENAME COLUMN
 Lección 13.11: https://youtu.be/OuJerKzV5T0?t=12624
@@ -21,6 +23,8 @@ Lección 13.11: https://youtu.be/OuJerKzV5T0?t=12624
 ALTER TABLE persons8
 RENAME COLUMN surname TO description;
 
+
+
 /*
 MODIFY COLUMN
 Lección 13.12: https://youtu.be/OuJerKzV5T0?t=12675
@@ -29,6 +33,8 @@ Lección 13.12: https://youtu.be/OuJerKzV5T0?t=12675
 -- MODIFY COLUMN: Modifica el tipo de dato del atributo description en la tabla "persons8"
 ALTER TABLE persons8
 MODIFY COLUMN description varchar(250);
+
+
 
 /*
 DROP COLUMN

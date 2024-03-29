@@ -1,27 +1,34 @@
-/*
-TIPOS DE RELACIONES
-*/
+/************************************ TIPOS DE RELACIONES ************************************/
 
 /*
 Relación 1:1 (uno a uno)
 Lección 15.1: https://youtu.be/OuJerKzV5T0?t=13490
+
 Relación que indica que un registro en la tabla A se relaciona 
 con un sólo registro en la tabla B y viceversa.
 */
 
 -- El campo user_id de la tabla "dni" es clave foránea de la clave primaria user_id de la tabla "users"
 -- (Un usuario sólo puede tener un DNI. Un DNI sólo puede estar asociado a un usuario)
+/*
+La clave de la tabla del "uno" pasa como campo (o foreing key) a la tabla del "muchos";
+En este caso al ser "uno a uno" puede pasarse el campo `user_id` como foreign key hacia la 
+tabla "dni" o `dni_id` como foreign key hacia la tabla "users", depende del diseño.
+*/
 CREATE TABLE dni(
 	dni_id int AUTO_INCREMENT PRIMARY KEY,
     dni_number int NOT NULL,
     user_id int,
-    UNIQUE(dni_id),
+    UNIQUE(user_id), -- Segun yo es UNIQUE(user_id) en lugar de UNIQUE(dni_id) para garantizar unicidad, en N:N se garantiza unicidad para la tupla de llaves foraneas.
     FOREIGN KEY(user_id) REFERENCES users(user_id)
 );
+
+
 
 /*
 Relación 1:N (uno a muchos)
 Lección 15.2: https://youtu.be/OuJerKzV5T0?t=13732
+
 Relación que indica que un registro en la tabla A puede tener varios registros relacionados en la
 tabla B, pero un registro en la tabla B se relaciona con un sólo registro en la tabla A.
 */
@@ -33,13 +40,18 @@ CREATE TABLE companies(
 
 -- El campo company_id de la tabla "users" es clave foránea de la clave primaria company_id de la tabla "companies"
 -- (Un empleado (usuario) sólo puede tener una empresa, pero una empresa puede tener muchos empleados (usuarios))
+-- La clave de la tabla del "uno" pasa como campo (o foreing key) a la tabla del "muchos".
 ALTER TABLE users 
 ADD CONSTRAINT fk_companies
 FOREIGN KEY(company_id) REFERENCES companies(company_id)
 
+
+
+
 /*
 Relación N:M (muchos a muchos)
 Lección 15.3: https://youtu.be/OuJerKzV5T0?t=14313
+
 Relación que indica que un un registro en la tabla A puede relacionarse
 con varios registros en la tabla B y viceversa.
 Requiere una tabla intermedia o de unión para establecer la relación.
@@ -50,17 +62,20 @@ CREATE TABLE languages(
     name varchar(100) NOT NULL
 );
 
--- El campo user_id y language_id de la tabla intermedia "users_languages" es clave foránea de las
--- claves primarias user_id de la tabla "users" y de language_id de la tabla "languages"
+-- Los campos user_id y language_id de la tabla intermedia "users_languages" son las claves foráneas
+-- de las claves primarias user_id de la tabla "users" y de language_id de la tabla "languages"
 -- Un usuario puede conoces muchos lenguajes. Un lenguaje puede ser conocido por muchos usuarios.
 CREATE TABLE users_languages(
 	users_language_id int AUTO_INCREMENT PRIMARY KEY,
-    user_id int,
-    language_id int,
+    user_id int, -- Falta que no sea nulo
+    language_id int, -- Falta que no sea nulo
     FOREIGN KEY(user_id) REFERENCES users(user_id),
     FOREIGN KEY(language_id) REFERENCES languages(language_id),
-    UNIQUE (user_id, language_id)
+    UNIQUE (user_id, language_id) -- La tupla es única
 );
+
+
+
 
 /*
 Relación de Auto-Referencia
@@ -68,9 +83,12 @@ Relación que indica que un un registro en la tabla A puede
 relacionarse con otro registro de la tabla A.
 */
 
-/*
-INSERT y UPDATE para trabajar con JOIN
-*/
+
+
+
+
+
+/******************************* INSERT y UPDATE para trabajar con JOIN *******************************/
 
 /*
 1:1
@@ -82,6 +100,8 @@ INSERT INTO dni (dni_number, user_id) VALUES (11111111, 1);
 INSERT INTO dni (dni_number, user_id) VALUES (22222222, 2);
 INSERT INTO dni (dni_number, user_id) VALUES (33333333, 3);
 INSERT INTO dni (dni_number) VALUES (44444444);
+
+
 
 /*
 1:N
@@ -97,6 +117,8 @@ UPDATE users SET company_id = 1 WHERE user_id = 1;
 UPDATE users SET company_id = 2 WHERE user_id = 3;
 UPDATE users SET company_id = 3 WHERE user_id = 4;
 UPDATE users SET company_id = 1 WHERE user_id = 7;
+
+
 
 /*
 N:M

@@ -3,13 +3,18 @@ TRIGGERS
 Lección 18.2: https://youtu.be/OuJerKzV5T0?t=18961
 */
 
+-- Instrucciones que se ejecutan automáticamente cuando ocurren eventos en la tabla.
+
+
 -- Crea una tabla de historial para usar en el ejemplo
 CREATE TABLE `hello_mysql`.`email_history` (
-`email_history_id` INT NOT NULL AUTO_INCREMENT,
-`user_id` INT NOT NULL,
-`email` VARCHAR(100) NULL,
-PRIMARY KEY (`email_history_id`),
-UNIQUE INDEX `email_history_id_UNIQUE` (`email_history_id` ASC) VISIBLE);
+	`email_history_id` INT NOT NULL AUTO_INCREMENT,
+	`user_id` INT NOT NULL,
+	`email` VARCHAR(100) NULL,
+	PRIMARY KEY (`email_history_id`),
+	UNIQUE INDEX `email_history_id_UNIQUE` (`email_history_id` ASC) VISIBLE
+);
+
 
 -- Crea un trigger llamado "tg_email" que guarda el email previo en la tabla "email_history" siempre
 -- que se actualiza el campo "email" en la tabla "users"
@@ -19,12 +24,11 @@ UNIQUE INDEX `email_history_id_UNIQUE` (`email_history_id` ASC) VISIBLE);
 -- instrucciones SQL terminadas con punto y coma dentro de un mismo bloque.
 DELIMITER //
 CREATE TRIGGER tg_email
-AFTER UPDATE ON users
+AFTER UPDATE ON users -- (BEFORE/AFTER) (INSERT/UPDATE/DELETE)
 FOR EACH ROW
 BEGIN
-	IF OLD.email <> NEW.email THEN
-		INSERT INTO email_history (user_id, email)
-		VALUES (OLD.user_id, OLD.email);
+	IF OLD.email <> NEW.email THEN -- a <> b : a es distinto de b
+		INSERT INTO email_history (user_id, email) VALUES (OLD.user_id, OLD.email);
 	END IF;
 END//
 

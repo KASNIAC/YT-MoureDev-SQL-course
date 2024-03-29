@@ -12,10 +12,9 @@ CREATE TABLE persons (
     created date
 );
 
-/*
-CONSTRAINTS: Restricciones
-*/
 
+
+/*************************** CONSTRAINTS: Restricciones *************************** /
 /*
 NOT NULL
 Lección 13.2: https://youtu.be/OuJerKzV5T0?t=11619
@@ -29,6 +28,8 @@ CREATE TABLE persons2 (
     email varchar(50),
     created date
 );
+
+
 
 /*
 UNIQUE
@@ -45,6 +46,8 @@ CREATE TABLE persons3 (
     UNIQUE(id)
 );
 
+
+
 /*
 PRIMARY KEY
 Lección 13.4: https://youtu.be/OuJerKzV5T0?t=11911
@@ -60,6 +63,8 @@ CREATE TABLE persons4 (
     UNIQUE(id),
     PRIMARY KEY(id)
 );
+
+
 
 /*
 CHECK
@@ -78,6 +83,8 @@ CREATE TABLE persons5 (
     CHECK(age>=18)
 );
 
+
+
 /*
 DEFAULT
 Lección 13.6: https://youtu.be/OuJerKzV5T0?t=12243
@@ -94,6 +101,8 @@ CREATE TABLE persons6 (
     PRIMARY KEY(id),
     CHECK(age>=18)
 );
+
+
 
 /*
 AUTO INCREMENT

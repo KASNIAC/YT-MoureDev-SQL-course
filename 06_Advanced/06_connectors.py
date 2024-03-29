@@ -14,7 +14,7 @@ def print_user(user):
         "port": "3306",
         "database": "hello_mysql",
         "user": "root",
-        "password": "root1234"
+        "password": "root"
     }
 
     # config = {

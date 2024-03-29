@@ -11,3 +11,5 @@ SELECT * FROM users WHERE email LIKE 'sara%';
 
 -- Obtiene todos datos de la tabla "users" que contienen un email una arroba
 SELECT * FROM users WHERE email LIKE '%@%';
+
+-- % es nuestro "Wildcard" o comodín
